@@ -28,15 +28,17 @@
     justify-content: center;
     -webkit-font-smoothing: antialiased;
   }
-  #app {
-    width: 100%;
-    max-width: 4400px;
-    background: var(--bg);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 0 20px rgba(0,0,0,0.08);
-  }
+#app {
+  width: 100%;
+  max-width: 390px;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(0,0,0,0.08);
+  position: relative;   /* ← 추가 */
+  overflow: hidden;     /* ← 추가 */
+}
 
   /* ── 헤더 ── */
   .header {
@@ -261,7 +263,7 @@
 
   /* ── 바텀 시트 ── */
   .detail-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
     z-index: 200; opacity: 0; pointer-events: none;
     transition: opacity 0.25s;
     display: flex; align-items: flex-end; justify-content: center;
@@ -323,7 +325,7 @@
 
   /* ── 토스트 ── */
   .toast {
-    position: fixed; bottom: 36px; left: 50%;
+    position: absolute; bottom: 36px; left: 50%;
     transform: translateX(-50%) translateY(20px);
     background: #1A1A1A; color: #fff;
     font-size: 13px; font-weight: 500;
@@ -335,7 +337,7 @@
 
   /* ── 스티키 CTA 버튼 ── */
   .sticky-cta {
-    position: fixed;
+    position: absolute;
     bottom: 0; left: 50%;
     transform: translateX(-50%);
     width: 100%; max-width: 390px;
