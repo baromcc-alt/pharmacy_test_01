@@ -8,42 +8,41 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   :root {
-    --brand: #FD7E14;
-    --brand-dark: #E56D00;
-    --brand-light: #FFF3E8;
-    --brand-mid: #FF9A3E;
+    --brand: #FBB97D;
+    --brand-dark: #F5A255;
+    --brand-light: #FEF3E7;
     --text-primary: #1A1A1A;
     --text-secondary: #6B7280;
     --text-tertiary: #9CA3AF;
     --border: #F0F0F0;
     --bg: #FFFFFF;
     --bg-gray: #F8F8F8;
-    --naver: #03C75A;
+    --green: #10B981;
+    --green-light: #ECFDF5;
   }
   html, body {
     font-family: 'Noto Sans KR', sans-serif;
-    background: #F5F5F5;
+    background: #F0F0F0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     -webkit-font-smoothing: antialiased;
   }
-#app {
-  width: 100%;
-  max-width: 390px;
-  background: var(--bg);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 0 20px rgba(0,0,0,0.08);
-  position: relative;   /* ← 추가 */
-  overflow: hidden;     /* ← 추가 */
-}
+  #app {
+    width: 100%;
+    max-width: 390px;
+    background: var(--bg);
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
 
   /* ── 헤더 ── */
   .header {
     background: #fff;
-    padding: 14px 16px 12px;
+    padding: 16px 20px 12px;
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
@@ -54,314 +53,431 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  .header-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .logo-pill {
-    background: var(--brand);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.2px;
+    margin-bottom: 14px;
   }
   .header-title {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--text-primary);
-    letter-spacing: -0.4px;
+    letter-spacing: -0.3px;
+  }
+  .header-title span {
+    color: var(--brand-dark);
   }
   .btn-share {
     display: flex;
     align-items: center;
-    gap: 4px;
-    background: var(--bg-gray);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
+    gap: 5px;
+    background: var(--brand-light);
+    color: var(--brand-dark);
+    border: none;
     border-radius: 20px;
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 7px 14px;
+    font-size: 13px;
     font-weight: 600;
     font-family: 'Noto Sans KR', sans-serif;
     cursor: pointer;
     transition: all 0.15s;
   }
-  .btn-share:active { opacity: 0.7; }
-  .btn-share svg { width: 14px; height: 14px; }
+  .btn-share:active { transform: scale(0.96); }
+  .btn-share svg { width: 15px; height: 15px; }
 
   /* ── 검색창 ── */
-  .search-wrap { position: relative; margin-bottom: 8px; }
+  .search-wrap {
+    position: relative;
+  }
   .search-icon {
-    position: absolute; left: 12px; top: 50%;
+    position: absolute;
+    left: 13px;
+    top: 50%;
     transform: translateY(-50%);
-    color: var(--text-tertiary); pointer-events: none;
+    color: var(--text-tertiary);
+    pointer-events: none;
   }
   .search-input {
-    width: 100%; height: 42px;
+    width: 100%;
+    height: 42px;
     background: var(--bg-gray);
     border: 1.5px solid transparent;
     border-radius: 10px;
-    padding: 0 36px 0 36px;
+    padding: 0 36px 0 38px;
     font-size: 14px;
     font-family: 'Noto Sans KR', sans-serif;
-    color: var(--text-primary); outline: none;
+    color: var(--text-primary);
+    outline: none;
     transition: border-color 0.2s;
   }
   .search-input:focus { border-color: var(--brand); background: #fff; }
   .search-input::placeholder { color: var(--text-tertiary); }
   .search-clear {
-    position: absolute; right: 10px; top: 50%;
+    position: absolute;
+    right: 10px;
+    top: 50%;
     transform: translateY(-50%);
-    background: var(--text-tertiary); border: none;
-    border-radius: 50%; width: 18px; height: 18px;
-    display: none; align-items: center; justify-content: center;
-    cursor: pointer; color: #fff; font-size: 11px;
+    background: var(--text-tertiary);
+    border: none;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 11px;
+    line-height: 1;
   }
   .search-clear.visible { display: flex; }
 
-  /* ── 필터 행 ── */
+  /* ── 필터 ── */
   .filter-row {
-    display: flex; gap: 6px;
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
   }
   .filter-select {
-    flex: 1; height: 36px;
+    flex: 1;
+    height: 38px;
     background: var(--bg-gray);
     border: 1.5px solid var(--border);
     border-radius: 8px;
-    padding: 0 24px 0 10px;
+    padding: 0 10px;
     font-size: 13px;
     font-family: 'Noto Sans KR', sans-serif;
-    color: var(--text-primary); outline: none; cursor: pointer;
+    color: var(--text-primary);
+    outline: none;
+    cursor: pointer;
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 8px center;
+    background-position: right 10px center;
+    padding-right: 26px;
     transition: border-color 0.2s;
   }
   .filter-select:focus { border-color: var(--brand); }
   .filter-select.active { border-color: var(--brand); background-color: var(--brand-light); color: var(--brand-dark); font-weight: 600; }
 
-  /* ── 닥터나우 필터 토글 ── */
-  .filter-tags {
-    display: flex; gap: 6px; margin-top: 8px;
-  }
-  .filter-tag {
-    display: flex; align-items: center; gap: 4px;
-    height: 30px; padding: 0 10px;
-    border: 1.5px solid var(--border);
-    border-radius: 20px;
-    background: var(--bg-gray);
-    font-size: 12px; font-weight: 600;
-    font-family: 'Noto Sans KR', sans-serif;
-    color: var(--text-secondary);
-    cursor: pointer; transition: all 0.15s;
-    white-space: nowrap;
-  }
-  .filter-tag.active {
-    background: var(--brand-light);
-    border-color: var(--brand);
-    color: var(--brand-dark);
-  }
-  .filter-tag .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--text-tertiary);
-    transition: background 0.15s;
-  }
-  .filter-tag.active .dot { background: var(--brand); }
-
-  /* ── 결과 바 ── */
+  /* ── 결과 카운트 ── */
   .result-bar {
-    padding: 9px 16px;
+    padding: 11px 20px;
     background: var(--bg-gray);
     border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-shrink: 0;
   }
-  .result-count { font-size: 13px; color: var(--text-secondary); }
-  .result-count strong { color: var(--brand-dark); font-weight: 700; }
-  .result-notice { font-size: 11px; color: var(--text-tertiary); }
+  .result-count {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .result-count strong {
+    color: var(--brand-dark);
+    font-weight: 700;
+  }
+  .result-notice {
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
 
   /* ── 리스트 ── */
   .list-container {
-    flex: 1; overflow-y: auto;
+    flex: 1;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   .list-container::-webkit-scrollbar { display: none; }
 
   .pharmacy-card {
-    padding: 14px 16px;
+    padding: 15px 20px;
     border-bottom: 1px solid var(--border);
-    cursor: pointer; transition: background 0.1s;
-    display: flex; align-items: flex-start; gap: 12px;
+    cursor: pointer;
+    transition: background 0.12s;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
   }
   .pharmacy-card:active { background: var(--bg-gray); }
+  .pharmacy-card:last-child { border-bottom: none; }
 
   .card-icon {
-    width: 42px; height: 42px; border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     background: var(--brand-light);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
+    margin-top: 1px;
   }
-  .card-icon svg { width: 20px; height: 20px; color: var(--brand); }
-  .card-icon.matched { background: var(--brand); }
-  .card-icon.matched svg { color: #fff; }
+  .card-icon svg { width: 20px; height: 20px; color: var(--brand-dark); }
 
   .card-body { flex: 1; min-width: 0; }
   .card-name-row {
-    display: flex; align-items: center; gap: 5px; margin-bottom: 3px;
-    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 3px;
   }
   .card-name {
-    font-size: 15px; font-weight: 700;
-    color: var(--text-primary); letter-spacing: -0.2px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .badge {
-    font-size: 10px; font-weight: 700;
-    padding: 2px 6px; border-radius: 4px;
-    white-space: nowrap; flex-shrink: 0;
+  .badge-onnuri {
+    flex-shrink: 0;
+    background: var(--brand);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0;
   }
-  .badge-onnuri { background: #FFF3E8; color: var(--brand-dark); border: 1px solid #FFD6A8; }
-  .badge-doctornow { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
-  .card-region { font-size: 12px; color: var(--text-tertiary); margin-bottom: 2px; }
+  .badge-doctornow {
+    flex-shrink: 0;
+    background: #EFF6FF;
+    color: #3B82F6;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .card-region {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 3px;
+  }
   .card-address {
-    font-size: 13px; color: var(--text-secondary);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-size: 13px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .card-arrow { color: var(--text-tertiary); flex-shrink: 0; margin-top: 10px; }
+  .card-arrow {
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    margin-top: 10px;
+  }
 
   /* ── 페이지네이션 ── */
   .pagination {
-    padding: 14px 16px 20px;
-    display: flex; align-items: center; justify-content: center; gap: 4px;
+    padding: 16px 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
     border-top: 1px solid var(--border);
   }
   .page-btn {
-    min-width: 32px; height: 32px;
-    border: 1.5px solid var(--border); background: #fff;
-    border-radius: 8px; font-size: 13px; font-weight: 500;
+    min-width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
     font-family: 'Noto Sans KR', sans-serif;
-    color: var(--text-secondary); cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s; padding: 0 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    padding: 0 8px;
   }
   .page-btn:hover { border-color: var(--brand); color: var(--brand-dark); }
   .page-btn.active { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 700; }
-  .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
   .page-btn:disabled:hover { border-color: var(--border); color: var(--text-secondary); }
 
   /* ── 빈 결과 ── */
-  .empty-state { padding: 60px 20px; text-align: center; }
-  .empty-state svg { width: 52px; height: 52px; color: var(--text-tertiary); margin-bottom: 14px; }
-  .empty-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
-  .empty-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
-
-  /* ── 바텀 시트 ── */
-  .detail-overlay {
-    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
-    z-index: 200; opacity: 0; pointer-events: none;
-    transition: opacity 0.25s;
-    display: flex; align-items: flex-end; justify-content: center;
+  .empty-state {
+    padding: 60px 20px;
+    text-align: center;
   }
-  .detail-overlay.open { opacity: 1; pointer-events: all; }
+  .empty-state svg { width: 56px; height: 56px; color: var(--text-tertiary); margin-bottom: 14px; }
+  .empty-title { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .empty-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* ── 상세 패널 ── */
+  .detail-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .detail-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
   .detail-sheet {
-    background: #fff; border-radius: 20px 20px 0 0;
-    width: 100%; max-width: 390px; padding: 0 0 32px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 390px;
+    padding: 0 0 32px;
     transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.32,0.72,0,1);
-    max-height: 80vh; overflow-y: auto;
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    max-height: 85vh;
+    overflow-y: auto;
   }
   .detail-sheet::-webkit-scrollbar { display: none; }
   .detail-overlay.open .detail-sheet { transform: translateY(0); }
 
   .sheet-handle {
-    width: 36px; height: 4px; background: #E5E7EB;
-    border-radius: 2px; margin: 12px auto 16px;
+    width: 36px;
+    height: 4px;
+    background: #E5E7EB;
+    border-radius: 2px;
+    margin: 12px auto 20px;
   }
-  .sheet-header { padding: 0 20px 16px; border-bottom: 1px solid var(--border); }
-  .sheet-badges { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .sheet-header {
+    padding: 0 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sheet-badges {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
   .sheet-name {
-    font-size: 20px; font-weight: 700;
-    color: var(--text-primary); letter-spacing: -0.3px; margin-bottom: 4px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
   }
-  .sheet-region { font-size: 13px; color: var(--text-tertiary); }
-
-  .sheet-body { padding: 16px 20px 4px; }
+  .sheet-region {
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+  .sheet-body { padding: 20px; }
   .info-row {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 11px 0; border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
   }
   .info-row:last-of-type { border-bottom: none; }
   .info-icon {
-    width: 34px; height: 34px; background: var(--bg-gray);
-    border-radius: 8px; display: flex;
-    align-items: center; justify-content: center; flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--bg-gray);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
-  .info-icon svg { width: 17px; height: 17px; color: var(--brand); }
+  .info-icon svg { width: 18px; height: 18px; color: var(--brand-dark); }
   .info-label { font-size: 11px; color: var(--text-tertiary); margin-bottom: 2px; }
   .info-value { font-size: 14px; color: var(--text-primary); font-weight: 500; line-height: 1.4; }
 
-  .sheet-actions { padding: 12px 20px 0; display: flex; flex-direction: column; gap: 8px; }
+  .sheet-actions { padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
   .btn-action {
-    width: 100%; height: 50px; border-radius: 12px; border: none;
-    font-size: 15px; font-weight: 700;
-    font-family: 'Noto Sans KR', sans-serif; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: all 0.15s; text-decoration: none;
+    width: 100%;
+    height: 50px;
+    border-radius: 12px;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.15s;
+    text-decoration: none;
   }
   .btn-action:active { transform: scale(0.98); }
-  .btn-doctornow { background: var(--brand); color: #fff; }
-  .btn-naver { background: var(--naver); color: #fff; }
+  .btn-naver {
+    background: #03C75A;
+    color: #fff;
+  }
+  .btn-doctornow {
+    background: var(--brand);
+    color: #fff;
+  }
   .btn-secondary {
-    background: var(--bg-gray); color: var(--text-secondary);
-    border: 1.5px solid var(--border); height: 44px;
-    font-size: 14px; font-weight: 600;
+    background: var(--bg-gray);
+    color: var(--text-primary);
+    border: 1.5px solid var(--border);
   }
 
   /* ── 토스트 ── */
   .toast {
-    position: absolute; bottom: 36px; left: 50%;
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background: #1A1A1A; color: #fff;
-    font-size: 13px; font-weight: 500;
-    padding: 10px 18px; border-radius: 10px;
-    white-space: nowrap; opacity: 0; transition: all 0.25s;
-    z-index: 999; font-family: 'Noto Sans KR', sans-serif; pointer-events: none;
+    background: #1A1A1A;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 11px 20px;
+    border-radius: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.25s;
+    z-index: 999;
+    font-family: 'Noto Sans KR', sans-serif;
+    pointer-events: none;
   }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 
-  /* ── 스티키 CTA 버튼 ── */
+  /* ── 스티키 CTA ── */
   .sticky-cta {
     position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 100%; max-width: 390px;
-    padding: 16px 16px 24px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 40%);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px 28px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 35%);
     z-index: 150;
     pointer-events: none;
   }
   .sticky-cta-btn {
-    width: 100%; height: 50px;
-    background: var(--brand);
+    width: 100%;
+    height: 52px;
+    background: #FD7E14;
     color: #fff;
-    border: none; border-radius: 14px;
-    font-size: 15px; font-weight: 700;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
     font-family: 'Noto Sans KR', sans-serif;
-    cursor: pointer; pointer-events: all;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    box-shadow: 0 2px 12px rgba(253,126,20,0.35);
+    cursor: pointer;
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(253,126,20,0.4);
     transition: all 0.15s;
     letter-spacing: -0.2px;
   }
   .sticky-cta-btn:active { transform: scale(0.98); opacity: 0.92; }
-  /* 리스트 하단 여백 */
-  .list-container { padding-bottom: 100px; }
+
+  /* 리스트 하단 여백 (CTA 버튼 가림 방지) */
+  .list-container { padding-bottom: 110px; }
 </style>
 </head>
 <body>
@@ -370,10 +486,7 @@
   <!-- 헤더 -->
   <div class="header">
     <div class="header-top">
-      <div class="header-logo">
-        <span class="logo-pill">온누리</span>
-        <span class="header-title">약국 찾기</span>
-      </div>
+      <div class="header-title">🏪 온누리 <span>약국 찾기</span></div>
       <button class="btn-share" onclick="handleShare()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/>
@@ -385,7 +498,7 @@
       <span class="search-icon">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
       </span>
-      <input class="search-input" id="searchInput" type="text" placeholder="약국명 또는 주소 검색" oninput="onSearchInput(this)" autocomplete="off" autocorrect="off" spellcheck="false">
+      <input class="search-input" id="searchInput" type="text" placeholder="약국명으로 검색" oninput="onSearchInput(this)" autocomplete="off" autocorrect="off" spellcheck="false">
       <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
     </div>
     <div class="filter-row">
@@ -395,11 +508,6 @@
       <select class="filter-select" id="sigunguSelect" onchange="onFilterChange()">
         <option value="">시/군/구 전체</option>
       </select>
-    </div>
-    <div class="filter-tags">
-      <button class="filter-tag" id="tagDoctornow" onclick="toggleDoctornow()">
-        <span class="dot"></span>닥터나우 제휴만
-      </button>
     </div>
   </div>
 
@@ -412,7 +520,7 @@
   <!-- 리스트 -->
   <div class="list-container" id="listContainer"></div>
 
-  <!-- 바텀 시트 -->
+  <!-- 상세 패널 -->
   <div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
     <div class="detail-sheet" id="detailSheet">
       <div class="sheet-handle"></div>
@@ -426,7 +534,6 @@
     </div>
   </div>
 
-
   <!-- 스티키 CTA -->
   <div class="sticky-cta">
     <button class="sticky-cta-btn" onclick="openDoctornowHome()">
@@ -437,6 +544,7 @@
     </button>
   </div>
 
+  <!-- 토스트 -->
   <div class="toast" id="toast"></div>
 </div>
 
@@ -449,58 +557,58 @@ const sidoSigungu = RAW.sido_sigungu;
 const PAGE_SIZE = 20;
 let filtered = [];
 let currentPage = 1;
-let filterDoctornow = false;
 
-// ── 초기화 ──────────────────────────────────────────────────
+// 초기화
 function init() {
+  // 시도 옵션
   const sidoSel = document.getElementById('sidoSelect');
   Object.keys(sidoSigungu).sort().forEach(sido => {
     const opt = document.createElement('option');
-    opt.value = sido; opt.textContent = sido;
+    opt.value = sido;
+    opt.textContent = sido;
     sidoSel.appendChild(opt);
   });
   applyFilter();
 }
 
-// ── 검색 ────────────────────────────────────────────────────
 function onSearchInput(el) {
   document.getElementById('searchClear').classList.toggle('visible', el.value.length > 0);
-  currentPage = 1; applyFilter();
-}
-function clearSearch() {
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchClear').classList.remove('visible');
-  currentPage = 1; applyFilter();
+  currentPage = 1;
+  applyFilter();
 }
 
-// ── 지역 필터 ────────────────────────────────────────────────
+function clearSearch() {
+  const inp = document.getElementById('searchInput');
+  inp.value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  currentPage = 1;
+  applyFilter();
+}
+
 function onSidoChange() {
   const sido = document.getElementById('sidoSelect').value;
-  const sg = document.getElementById('sigunguSelect');
-  sg.innerHTML = '<option value="">시/군/구 전체</option>';
+  const sigunguSel = document.getElementById('sigunguSelect');
+  sigunguSel.innerHTML = '<option value="">시/군/구 전체</option>';
   if (sido && sidoSigungu[sido]) {
-    sidoSigungu[sido].forEach(s => {
+    sidoSigungu[sido].forEach(sg => {
       const opt = document.createElement('option');
-      opt.value = s; opt.textContent = s; sg.appendChild(opt);
+      opt.value = sg;
+      opt.textContent = sg;
+      sigunguSel.appendChild(opt);
     });
   }
   document.getElementById('sidoSelect').classList.toggle('active', !!sido);
-  currentPage = 1; applyFilter();
+  currentPage = 1;
+  applyFilter();
 }
+
 function onFilterChange() {
   const sg = document.getElementById('sigunguSelect').value;
   document.getElementById('sigunguSelect').classList.toggle('active', !!sg);
-  currentPage = 1; applyFilter();
+  currentPage = 1;
+  applyFilter();
 }
 
-// ── 닥터나우 제휴 토글 ────────────────────────────────────────
-function toggleDoctornow() {
-  filterDoctornow = !filterDoctornow;
-  document.getElementById('tagDoctornow').classList.toggle('active', filterDoctornow);
-  currentPage = 1; applyFilter();
-}
-
-// ── 필터 적용 ────────────────────────────────────────────────
 function applyFilter() {
   const q = document.getElementById('searchInput').value.trim();
   const sido = document.getElementById('sidoSelect').value;
@@ -509,12 +617,7 @@ function applyFilter() {
   filtered = pharmacies.filter(p => {
     if (sido && p.sido !== sido) return false;
     if (sigungu && p.sigungu !== sigungu) return false;
-    if (filterDoctornow && !p.matched) return false;
-    if (q) {
-      // 약국명 + 주소 + "닥터나우" 키워드 검색
-      const haystack = p.name + p.address + p.sigungu + p.sido + (p.matched ? '닥터나우' : '');
-      if (!haystack.includes(q)) return false;
-    }
+    if (q && !p.name.includes(q)) return false;
     return true;
   });
 
@@ -522,7 +625,6 @@ function applyFilter() {
   renderList();
 }
 
-// ── 리스트 렌더 ──────────────────────────────────────────────
 function renderList() {
   const container = document.getElementById('listContainer');
   const total = filtered.length;
@@ -546,12 +648,11 @@ function renderList() {
 
   let html = '';
   items.forEach((p, i) => {
-    const addrShort = p.address.length > 28 ? p.address.substring(0, 28) + '…' : p.address;
-    const matchBadge = p.matched ? '<span class="badge badge-doctornow">닥터나우 제휴</span>' : '';
-    const iconClass = p.matched ? 'card-icon matched' : 'card-icon';
+    const addrShort = p.address.length > 30 ? p.address.substring(0, 30) + '…' : p.address;
+    const matchBadge = p.matched ? '<span class="badge-doctornow">닥터나우 제휴</span>' : '';
     html += `
       <div class="pharmacy-card" onclick="showDetail(${start + i})">
-        <div class="${iconClass}">
+        <div class="card-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
@@ -559,14 +660,14 @@ function renderList() {
         <div class="card-body">
           <div class="card-name-row">
             <span class="card-name">${p.name}</span>
-            <span class="badge badge-onnuri">온누리</span>
+            <span class="badge-onnuri">온누리</span>
             ${matchBadge}
           </div>
           <div class="card-region">${p.sido} · ${p.sigungu}</div>
           <div class="card-address">${addrShort}</div>
         </div>
         <div class="card-arrow">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
       </div>`;
   });
@@ -574,25 +675,36 @@ function renderList() {
   // 페이지네이션
   if (totalPages > 1) {
     html += '<div class="pagination">';
+    // 이전
     html += `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
     </button>`;
-    const pg = currentPage, pages = [];
-    if (totalPages <= 7) { for (let i=1;i<=totalPages;i++) pages.push(i); }
-    else {
+
+    // 페이지 번호
+    const pg = currentPage;
+    const pages = [];
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
       pages.push(1);
       if (pg > 4) pages.push('…');
-      for (let i=Math.max(2,pg-2);i<=Math.min(totalPages-1,pg+2);i++) pages.push(i);
-      if (pg < totalPages-3) pages.push('…');
+      for (let i = Math.max(2, pg-2); i <= Math.min(totalPages-1, pg+2); i++) pages.push(i);
+      if (pg < totalPages - 3) pages.push('…');
       pages.push(totalPages);
     }
     pages.forEach(p => {
-      if (p === '…') html += `<button class="page-btn" disabled style="border:none;background:none">…</button>`;
-      else html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+      if (p === '…') {
+        html += `<button class="page-btn" disabled style="border:none;background:none;color:var(--text-tertiary)">…</button>`;
+      } else {
+        html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+      }
     });
+
+    // 다음
     html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-    </button></div>`;
+    </button>`;
+    html += '</div>';
   }
 
   container.innerHTML = html;
@@ -600,54 +712,71 @@ function renderList() {
 }
 
 function goPage(page) {
-  const total = Math.ceil(filtered.length / PAGE_SIZE);
-  if (page < 1 || page > total) return;
-  currentPage = page; renderList();
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  renderList();
 }
 
-// ── 상세 시트 ────────────────────────────────────────────────
+// 상세 패널
 function showDetail(idx) {
   const p = filtered[idx];
-  let badges = '<span class="badge badge-onnuri" style="font-size:11px;padding:3px 8px;">온누리상품권</span>';
-  if (p.matched) badges += '<span class="badge badge-doctornow" style="font-size:11px;padding:3px 8px;">닥터나우 제휴</span>';
+  const overlay = document.getElementById('detailOverlay');
+
+  // 배지
+  let badges = '<span class="badge-onnuri" style="font-size:11px;padding:3px 8px;">온누리상품권</span>';
+  if (p.matched) badges += '<span class="badge-doctornow" style="font-size:11px;padding:3px 8px;">닥터나우 제휴</span>';
   document.getElementById('detailBadges').innerHTML = badges;
   document.getElementById('detailName').textContent = p.name;
   document.getElementById('detailRegion').textContent = `${p.sido} ${p.sigungu}`;
 
-  document.getElementById('detailBody').innerHTML = `
+  // 정보 rows
+  let bodyHtml = `
     <div class="info-row">
       <div class="info-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       </div>
-      <div><div class="info-label">주소</div><div class="info-value">${p.address}</div></div>
+      <div>
+        <div class="info-label">주소</div>
+        <div class="info-value">${p.address}</div>
+      </div>
     </div>
     <div class="info-row">
       <div class="info-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
       </div>
-      <div><div class="info-label">결제수단</div><div class="info-value">지류형 · 모바일 · 카드형</div></div>
+      <div>
+        <div class="info-label">결제수단</div>
+        <div class="info-value">지류형 · 모바일 · 카드형</div>
+      </div>
     </div>`;
+  document.getElementById('detailBody').innerHTML = bodyHtml;
 
-  const naverUrl = `https://map.naver.com/p/search/${encodeURIComponent(p.name + ' ' + p.address)}`;
-  let actions = '';
+  // 버튼
+  const naverQuery = encodeURIComponent(p.name + ' ' + p.address);
+  const naverUrl = `https://map.naver.com/p/search/${naverQuery}`;
+
+  let actionsHtml = `
+    <a href="${naverUrl}" target="_blank" class="btn-action btn-naver">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      네이버 지도에서 보기
+    </a>`;
 
   if (p.matched && p.id) {
-    actions += `
+    actionsHtml += `
       <button class="btn-action btn-doctornow" onclick="openDoctornow(${p.id})">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 15.21a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 4.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         닥터나우에서 처방받기
       </button>`;
   }
 
-  actions += `
-    <a href="${naverUrl}" target="_blank" class="btn-action btn-naver">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      네이버 지도에서 보기
-    </a>
-    <button class="btn-action btn-secondary" onclick="closeDetail()">닫기</button>`;
+  actionsHtml += `
+    <button class="btn-action btn-secondary" onclick="closeDetail()">
+      닫기
+    </button>`;
+  document.getElementById('detailActions').innerHTML = actionsHtml;
 
-  document.getElementById('detailActions').innerHTML = actions;
-  document.getElementById('detailOverlay').classList.add('open');
+  overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
@@ -657,65 +786,58 @@ function closeDetail(e) {
   document.body.style.overflow = '';
 }
 
-
-// ── 닥터나우 홈 이동 (앱 없으면 스토어) ─────────────────────────
-function openDoctornowHome() {
-  const deeplink = 'doctornow://home';
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const storeUrl = isIOS
-    ? 'https://apps.apple.com/kr/app/id1511206727'
-    : 'https://play.google.com/store/apps/details?id=com.doctornow.app';
-
-  const fallback = setTimeout(() => {
-    if (!document.hidden) window.location.href = storeUrl;
-  }, 1500);
-
-  window.addEventListener('visibilitychange', () => {
-    if (document.hidden) clearTimeout(fallback);
-  }, { once: true });
-
-  window.location.href = deeplink;
-}
-
-// ── 닥터나우 딥링크 (앱 없으면 스토어) ─────────────────────────
-function openDoctornow(id) {
-  const deeplink = `doctornow://pharmacy/${id}`;
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const isAndroid = /android/i.test(navigator.userAgent);
-  const storeUrl = isIOS
-    ? 'https://apps.apple.com/kr/app/id1511206727'
-    : 'https://play.google.com/store/apps/details?id=com.doctornow.app';
-
-  // 딥링크 시도 후 1.5초 내 앱 전환 없으면 스토어로
-  const fallback = setTimeout(() => {
-    if (!document.hidden) window.location.href = storeUrl;
-  }, 1500);
-
-  window.addEventListener('visibilitychange', () => {
-    if (document.hidden) clearTimeout(fallback);
-  }, { once: true });
-
-  window.location.href = deeplink;
-}
-
-// ── 공유 ─────────────────────────────────────────────────────
+// 공유하기
 async function handleShare() {
   const url = window.location.href;
-  const title = '온누리 약국 찾기 — 전국 온누리상품권 가맹 약국';
+  const title = '온누리 약국 찾기 — 전국 2,271개 온누리상품권 가맹 약국';
   if (navigator.share) {
-    try { await navigator.share({ title, url }); } catch(e) {}
+    try {
+      await navigator.share({ title, url });
+    } catch(e) {}
   } else {
     try {
       await navigator.clipboard.writeText(url);
       showToast('🔗 링크가 복사되었어요');
-    } catch(e) { showToast('링크 복사에 실패했어요'); }
+    } catch(e) {
+      showToast('링크 복사에 실패했어요');
+    }
   }
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
+  t.textContent = msg;
+  t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// 닥터나우 딥링크 (앱 없으면 스토어 이동)
+function openDoctornow(id) {
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const storeUrl = isIOS
+    ? 'https://apps.apple.com/kr/app/id1511206727'
+    : 'https://play.google.com/store/apps/details?id=com.doctornow.app';
+  const fallback = setTimeout(() => {
+    if (!document.hidden) window.location.href = storeUrl;
+  }, 1500);
+  window.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearTimeout(fallback);
+  }, { once: true });
+  window.location.href = `doctornow://pharmacy/${id}`;
+}
+
+function openDoctornowHome() {
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const storeUrl = isIOS
+    ? 'https://apps.apple.com/kr/app/id1511206727'
+    : 'https://play.google.com/store/apps/details?id=com.doctornow.app';
+  const fallback = setTimeout(() => {
+    if (!document.hidden) window.location.href = storeUrl;
+  }, 1500);
+  window.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearTimeout(fallback);
+  }, { once: true });
+  window.location.href = 'doctornow://home';
 }
 
 init();
